@@ -1,8 +1,6 @@
 aid: fda-regulations
 name: FDA Regulations
-description: Federal regulations governing the safety, efficacy, and security of food,
-  drugs, medical devices, and other products under FDA jurisdiction. Organizations
-  adopt it to address specific technical or business challenges in their environments.
+description: Federal regulations governing the safety, efficacy, and security of food, drugs, medical devices, and other products under FDA jurisdiction. Organizations adopt it to address specific technical or business challenges in their environments.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: >-
@@ -11,11 +9,11 @@ created: '2025-01-01'
 modified: '2026-03-16'
 specificationVersion: '0.19'
 tags:
-  - Regulatory Compliance
+  - Food Safety
   - Healthcare
   - Medical Devices
   - Pharmaceuticals
-  - Food Safety
+  - Regulatory Compliance
 apis: []
 common:
   - type: Website
