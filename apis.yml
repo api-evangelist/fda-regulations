@@ -16,6 +16,8 @@ tags:
   - Regulatory Compliance
 apis: []
 common:
+  - type: DomainSecurity
+    url: security/fda-regulations-domain-security.yml
   - type: Website
     url: https://www.fda.gov/regulatory-information/laws-enforced-fda
 maintainers:
