@@ -45,3 +45,5 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-parent: food-and-drug-administration
+x-relationship: product
