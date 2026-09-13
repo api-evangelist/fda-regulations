@@ -1,0 +1,32 @@
+generated: '2026-09-12'
+method: searched
+source: https://datadashboard.fda.gov/oii/api/index.htm#section-try
+note: >-
+  FDA publishes an interactive API console, but no sandbox. Recording the distinction rather
+  than blurring it: the "Try It Out!" panel on the documentation page executes real requests
+  against the production API using the caller's own live credentials. There is no test mode, no
+  test key prefix, no fixture data, no simulated records and no time simulation, because the
+  API is read-only over public regulatory data and there is nothing to simulate.
+console:
+  present: true
+  url: https://datadashboard.fda.gov/oii/api/index.htm#section-try
+  kind: in-page try-it console
+  operations: [inspectionsClassifications, inspectionsCitations, complianceActions, importRefusals]
+  credentials_required: true
+  flow: >-
+    Click the AUTHORIZATION button, submit a real Authorization-User and Authorization-Key, then
+    paste a JSON request body into the per-endpoint form. Without a successful authentication
+    every Try It Out call returns "401 - Not Authorized".
+  target: production
+  note: >-
+    Per-endpoint forms are prefilled with FDA's own published sample request bodies — captured in
+    examples/fda-regulations-examples.yml.
+test_mode:
+  available: false
+  key_prefixes: []
+  test_values: []
+  time_simulation: false
+  fixtures: []
+  note: >-
+    No separate test environment, no sandbox host, no test credentials. Checked the whole usage
+    documentation page; the only host FDA publishes is https://api-datadashboard.fda.gov/v1.

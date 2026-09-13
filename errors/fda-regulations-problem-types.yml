@@ -1,0 +1,37 @@
+generated: '2026-09-12'
+method: derived
+source: openapi/fda-regulations-data-dashboard-openapi.yml
+format: proprietary
+note: >-
+  Derived from the OpenAPI response declarations. The specification declares only a 200 and a
+  `default` response per operation; it carries no 4xx or 5xx status codes at all, because the API
+  signals failure with an in-body numeric statuscode over an HTTP 200. The real, enumerated error
+  registry is therefore errors/fda-regulations-error-codes.yml, searched from the docs — this
+  file records what the contract itself says, which is deliberately thin.
+rfc9457: false
+problems:
+  - status: default
+    title: Application validation error.
+    schema: '#/components/schemas/Error'
+    media_type: application/json
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#importRefusals
+  - status: default
+    title: Application validation error.
+    schema: '#/components/schemas/Error'
+    media_type: application/json
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#inspectionsCitations
+  - status: default
+    title: Application validation error.
+    schema: '#/components/schemas/Error'
+    media_type: application/json
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#inspectionsClassifications
+  - status: default
+    title: Application validation error.
+    schema: '#/components/schemas/Error'
+    media_type: application/json
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#complianceActions
+gaps:
+  - No 4xx response is declared on any operation.
+  - No 5xx response is declared on any operation.
+  - The Error schema is an untyped array with no described item shape.
+cross_reference: errors/fda-regulations-error-codes.yml

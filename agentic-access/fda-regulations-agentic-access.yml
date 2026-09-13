@@ -1,0 +1,70 @@
+generated: '2026-09-12'
+method: generated
+source: openapi/fda-regulations-data-dashboard-openapi.yml
+description: Recommended x-agentic-access execution contracts for the FDA Data Dashboard API. The mechanical
+  classifier treated all four operations as writes because the API uses HTTP POST; corrected here against
+  the provider's own documentation, which describes every endpoint as "Search and retrieve ... data" over
+  a read-only public dataset. POST is used only to carry the JSON filter/column/sort body, not to mutate
+  state. A governance starting point — review and bind audience per deployment.
+summary:
+  operations: 4
+  by_action_class:
+    connected: 4
+  by_consequence:
+    read: 4
+  human_in_the_loop_required: 0
+operations:
+  - path: /import_refusals
+    method: post
+    operationId: importRefusals
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      escalation:
+        human-in-the-loop: not-required
+      audit: recommended
+  - path: /inspections_citations
+    method: post
+    operationId: inspectionsCitations
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      escalation:
+        human-in-the-loop: not-required
+      audit: recommended
+  - path: /inspections_classifications
+    method: post
+    operationId: inspectionsClassifications
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      escalation:
+        human-in-the-loop: not-required
+      audit: recommended
+  - path: /compliance_actions
+    method: post
+    operationId: complianceActions
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: required
+      audience: null
+      token:
+        max-ttl: 3600
+      escalation:
+        human-in-the-loop: not-required
+      audit: recommended
+curation_note: 'Action class downgraded acting/write -> connected/read on all 4 operations: https://datadashboard.fda.gov/oii/api/index.htm
+  documents them as dataset searches; the API exposes no create/update/delete surface.'

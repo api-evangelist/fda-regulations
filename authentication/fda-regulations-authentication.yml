@@ -1,0 +1,21 @@
+generated: '2026-09-12'
+method: derived
+source: openapi/fda-regulations-data-dashboard-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: api_user
+  type: apiKey
+  in: header
+  parameter: Authorization-User
+  sources:
+  - openapi/fda-regulations-data-dashboard-openapi.yml
+- name: api_key
+  type: apiKey
+  in: header
+  parameter: Authorization-Key
+  sources:
+  - openapi/fda-regulations-data-dashboard-openapi.yml

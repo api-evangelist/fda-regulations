@@ -1,0 +1,83 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the FDA Data Dashboard API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-12'
+  method: generated
+  source: >-
+    Derived from https://datadashboard.fda.gov/oii/api/index.htm and the four published
+    field-definition tables. Applies to the harvested contract without mutating it.
+  note: >-
+    Every value added here is transcribed from FDA's own documentation, not invented. The
+    harvested spec at openapi/_original/fda-data-dashboard-openapi.json stays byte-identical to
+    what FDA serves.
+extends: openapi/fda-regulations-data-dashboard-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-profile: https://apis.io/provider/fda-regulations
+      x-apievangelist-harvested: '2026-09-12'
+      x-apievangelist-source: https://datadashboard.fda.gov/oii/api/ddapi.json
+      x-error-registry: >-
+        Failure is signalled by an in-body numeric statuscode, not by HTTP status. statuscode 400
+        means Success and 401 means Not Authorized. Full registry:
+        https://datadashboard.fda.gov/oii/api/index.htm#section-responsemessage
+      x-read-only: true
+      x-transport-requirement: TLS 1.2 required for all requests.
+  - target: $
+    update:
+      x-pagination:
+        style: offset
+        request: [start, rows, returntotalcount]
+        response: [resultcount, totalrecordcount]
+        max_page_size: 5000
+  - target: $.components.schemas.RequestBody.properties.start
+    update:
+      description: First row of the matching result set to return. 1-based. Defaults to 1.
+      minimum: 1
+  - target: $.components.schemas.RequestBody.properties.rows
+    update:
+      description: Maximum number of rows to return. Defaults to 5000, which is also the hard maximum.
+      minimum: 1
+      maximum: 5000
+  - target: $.components.schemas.RequestBody.properties.sortorder
+    update:
+      description: Sort direction. Case-insensitive.
+      enum: [asc, desc, ASC, DESC]
+  - target: $.components.schemas.RequestBody.properties.filters
+    update:
+      description: >-
+        Object whose keys are case-sensitive dataset fieldnames and whose values are arrays of
+        search terms. Terms within one field are OR'd; fields are AND'd. Date fields use a From
+        and/or To suffix on the fieldname and honour only the first value in the array.
+  - target: $.components.schemas.RequestBody.properties.columns
+    update:
+      description: >-
+        Array of fieldnames to project. Omit or send an empty array to return every column. Some
+        fieldnames are returnable but not filterable — see the per-dataset field definitions.
+  - target: $.paths['/inspections_classifications'].post
+    update:
+      x-dataset: Inspections Classifications
+      x-field-definitions: https://datadashboard.fda.gov/oii/api/api-definitions-inspections.htm
+      x-primary-key: InspectionID
+      x-read-only: true
+  - target: $.paths['/inspections_citations'].post
+    update:
+      x-dataset: Inspections Citations
+      x-field-definitions: https://datadashboard.fda.gov/oii/api/api-definitions-citations.htm
+      x-primary-key: CitationID
+      x-domain-identifier: ActCFRNumber
+      x-read-only: true
+  - target: $.paths['/compliance_actions'].post
+    update:
+      x-dataset: Compliance Actions
+      x-field-definitions: https://datadashboard.fda.gov/oii/api/api-definitions-compliance-actions.htm
+      x-primary-key: CaseInjunctionID
+      x-read-only: true
+  - target: $.paths['/import_refusals'].post
+    update:
+      x-dataset: Import Refusals
+      x-field-definitions: https://datadashboard.fda.gov/oii/api/api-definitions-refusals.htm
+      x-primary-key: ShipmentID
+      x-read-only: true

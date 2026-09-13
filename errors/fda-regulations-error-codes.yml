@@ -1,0 +1,106 @@
+generated: '2026-09-12'
+method: searched
+source: https://datadashboard.fda.gov/oii/api/index.htm#section-responsemessage
+format: proprietary
+note: >-
+  The FDA Data Dashboard API returns its own numeric statuscode inside the JSON body rather than
+  signalling through HTTP status. The registry below is transcribed verbatim from the provider's
+  "Supported response statuscodes and messages" table. Note the trap for integrators and agents:
+  statuscode 400 means SUCCESS here, and 404 means "Invalid request endpoint", not "not found".
+envelope:
+  fields: [statuscode, message, resultcount, result]
+  success_code: 400
+error_codes:
+  - code: 400
+    message: Success.
+    kind: success
+  - code: 401
+    message: Not Authorized.
+    kind: auth
+    remediation: Supply valid Authorization-User and Authorization-Key headers.
+  - code: 402
+    message: Invalid JSON in request.
+    kind: request
+  - code: 403
+    message: Invalid request body format.
+    kind: request
+    diagnostic_fields: [invalid_filters_type, invalid_parameters]
+  - code: 404
+    message: Invalid request endpoint.
+    kind: routing
+  - code: 405
+    message: HTTP method not allowed.
+    kind: routing
+    remediation: All endpoints are POST.
+  - code: 406
+    message: Invalid fieldname in request body columns parameter value.
+    kind: validation
+    diagnostic_fields: [invalid_columns]
+  - code: 407
+    message: Invalid fieldname in request body sort parameter value.
+    kind: validation
+  - code: 408
+    message: Request body start parameter must be numeric and greater than 0.
+    kind: validation
+  - code: 409
+    message: Request body rows parameter must be numeric and greater than 0.
+    kind: validation
+  - code: 410
+    message: Required parameter(s) missing from request body.
+    kind: validation
+    diagnostic_fields: [missing_parameters]
+  - code: 411
+    message: Invalid value in request body sortorder parameter. Valid values are asc and desc.
+    kind: validation
+  - code: 412
+    message: No results found.
+    kind: empty
+  - code: 413
+    message: Invalid fieldname in request body filters parameter item key.
+    kind: validation
+    diagnostic_fields: [invalid_filters]
+  - code: 414
+    message: Invalid values in request body filters parameter for the following item(s).
+    kind: validation
+    diagnostic_fields: [fieldnames_with_invalid_values]
+  - code: 415
+    message: Request body rows parameter must be <= 5000.
+    kind: validation
+  - code: 416
+    message: Duplicate request body parameters are not allowed.
+    kind: validation
+    diagnostic_fields: [duplicate_parameters]
+  - code: 417
+    message: Invalid input value in request body parameter.
+    kind: validation
+  - code: 418
+    message: Duplicate fieldnames are not allowed in filters.
+    kind: validation
+    diagnostic_fields: [duplicate_filters]
+  - code: 419
+    message: Duplicate fieldnames are not allowed in columns.
+    kind: validation
+    diagnostic_fields: [duplicate_columns]
+diagnostic_fields:
+  - field: invalid_columns
+    description: Invalid column names supplied in the columns parameter. Returned with statuscode 406.
+  - field: invalid_filters
+    description: Invalid column names supplied in the filters parameter. Returned with statuscode 413.
+  - field: invalid_filters_type
+    description: >-
+      Filter fieldnames whose value is the wrong type — typically a value not wrapped in an
+      array. May be returned with statuscode 403.
+  - field: invalid_parameters
+    description: Invalid key names in the request body. May be returned with statuscode 403.
+  - field: fieldnames_with_invalid_values
+    description: >-
+      Filter fieldnames whose value does not match the fieldname's datatype. Returned with
+      statuscode 414.
+  - field: missing_parameters
+    description: Required key names missing from the request body. Returned with statuscode 410.
+  - field: duplicate_parameters
+    description: Duplicate key names in the request body. Returned with statuscode 416.
+  - field: duplicate_filters
+    description: Duplicate fieldnames in the filters parameter. Returned with statuscode 418.
+  - field: duplicate_columns
+    description: Duplicate fieldnames in the columns parameter. Returned with statuscode 419.

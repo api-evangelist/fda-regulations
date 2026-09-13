@@ -1,0 +1,111 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  openapi/_original/fda-data-dashboard-openapi.json and
+  https://datadashboard.fda.gov/oii/api/index.htm
+note: >-
+  Derived from the published contract and the usage documentation. FDA makes no conformance or
+  certification claim of any kind for this API — there is no trust center, no SOC 2 / ISO 27001 /
+  FedRAMP statement reachable from the Data Dashboard site, and no compliance page. Every
+  negative below was checked against the spec or the docs, not assumed.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      FDA publishes a first-party OpenAPI 3.0.0 document at
+      https://datadashboard.fda.gov/oii/api/ddapi.json (openapi: "3.0.0", 4 paths, 6 component
+      schemas, 2 securitySchemes). Byte-identical copy also served at /ora/api/ddapi.json.
+  - id: rest
+    conforms: partial
+    evidence: >-
+      Resource-oriented URLs over HTTPS returning JSON, but every operation is POST — including
+      the reads — and failure is signalled by an in-body numeric statuscode rather than by HTTP
+      status. Not uniform-interface REST.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a proprietary {statuscode, message, resultcount, result} envelope over HTTP 200.
+      No application/problem+json anywhere in the spec or the docs.
+  - id: oauth2
+    conforms: false
+    evidence: securitySchemes declares only two apiKey header schemes; no oauth2 flow.
+  - id: oidc
+    conforms: false
+    evidence: No openIdConnect scheme; /.well-known/openid-configuration is 404 on all hosts.
+  - id: tls-1.2
+    conforms: true
+    evidence: >-
+      "API requests must be sent from a client using TLS 1.2" —
+      https://datadashboard.fda.gov/oii/api/index.htm#section-ssl-requirements. Probed
+      2026-09-12: api-datadashboard.fda.gov negotiates TLSv1.2.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on fda.gov, www.fda.gov, datadashboard.fda.gov and api-datadashboard.fda.gov.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Documented offset pagination — start, rows, returntotalcount request parameters and
+      resultcount / totalrecordcount response fields, hard page cap 5000 rows.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No idempotency key mechanism. Not a gap in practice — the API has no mutating surface, so
+      there is nothing to replay-protect. See conventions/fda-regulations-conventions.yml
+      (idempotency.coverage = na).
+  - id: iso-8601-dates
+    conforms: true
+    evidence: >-
+      "Date values in API responses will be returned in ISO format YYYY-MM-DD" —
+      https://datadashboard.fda.gov/oii/api/index.htm#section-datevalueformat. Request filters
+      additionally accept MM-DD-YYYY and MM/DD/YYYY.
+  - id: json-schema
+    conforms: partial
+    evidence: >-
+      components.schemas defines RequestBody, four response envelopes and an Error schema, but
+      every `result` array and the Error schema are untyped — the per-dataset row shapes exist
+      only as HTML field-definition tables, not in the contract.
+domain_standards:
+  - id: 21-cfr
+    conforms: true
+    kind: regulatory-identifier-scheme
+    evidence: >-
+      The inspections-citations dataset carries ActCFRNumber — the FD&C Act section or Title 21
+      Code of Federal Regulations citation an FDA investigator recorded against a firm — as a
+      first-class, filterable, sortable field. Documented at
+      https://datadashboard.fda.gov/oii/api/api-definitions-citations.htm. This is the API
+      declaring the domain's own regulatory identifier scheme rather than a bespoke code.
+  - id: fda-fei
+    conforms: true
+    kind: registry-identifier-scheme
+    evidence: >-
+      FEINumber (FDA Establishment Identifier) is the numeric join key across all four datasets
+      and is the same identifier FDA uses in registration and listing. Filterable on every
+      endpoint; documented in all four field-definition tables.
+  - id: fda-product-code
+    conforms: true
+    kind: domain-code-list
+    evidence: >-
+      ProductCode / ProductCodeDescription on the import-refusals dataset are FDA product codes,
+      the agency's own coded product taxonomy, not free text.
+      https://datadashboard.fda.gov/oii/api/api-definitions-refusals.htm
+  - id: fhir
+    conforms: false
+    evidence: >-
+      Checked because the Kin Score health regime shortlists it. Not applicable — this is a
+      regulatory-enforcement dataset API, not a clinical-data API, and no FHIR resource shape,
+      profile or endpoint appears in the spec or docs.
+  - id: hl7-v2
+    conforms: false
+    evidence: No HL7 message type anywhere in the contract or docs.
+  - id: spl
+    conforms: false
+    evidence: >-
+      FDA's Structured Product Labeling standard is served by the sibling openFDA API on the
+      parent record, not by the Data Dashboard API.
+certifications: []
+compliance_program:
+  published: false
+  note: >-
+    No trust center, no certification list, no compliance page. Probed 2026-09-12:
+    www.fda.gov/security 404, www.fda.gov/vulnerability-disclosure-policy 404,
+    /.well-known/security.txt 404 on every host. No Compliance pointer is emitted.

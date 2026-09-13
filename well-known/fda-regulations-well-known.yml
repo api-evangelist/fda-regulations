@@ -1,0 +1,102 @@
+generated: '2026-09-12'
+method: probed
+source: live HTTPS probes of every host this record knows
+note: >-
+  Every named path in the enrichment contract was probed on all four hosts the record knows —
+  the registrable domain (fda.gov), www.fda.gov, the docs host (datadashboard.fda.gov) and the
+  API host (api-datadashboard.fda.gov). Nothing is served: FDA publishes no security.txt, no
+  OAuth/OIDC discovery, no api-catalog, no ai-plugin, no agent card, no apis.json. The negative
+  control returned 404 on all four hosts, so none of them is a path-echoing catch-all and the
+  404s are real. open.fda.gov (the parent record's docs host) answered 403 to every request
+  including the negative control — a blanket edge block on our user agent, not a measurement —
+  and is therefore excluded rather than recorded as a set of misses.
+hit_count: 0
+path_echo_control: passed
+hosts:
+  - host: https://www.fda.gov
+    negative_control:
+      path: /.well-known/fda-regulations-negative-control-7f3ab91c.json
+      status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+  - host: https://fda.gov
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+  - host: https://datadashboard.fda.gov
+    negative_control:
+      path: /.well-known/fda-regulations-negative-control-7f3ab91c.json
+      status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404
+  - host: https://api-datadashboard.fda.gov
+    negative_control:
+      path: /.well-known/fda-regulations-negative-control-7f3ab91c.json
+      status: 404
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 404

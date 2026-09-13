@@ -1,0 +1,22 @@
+generated: '2026-09-12'
+method: searched
+source: https://datadashboard.fda.gov/oii/api/index.htm#section-authentication
+plan_count: 0
+note: >-
+  There are no plans and no pricing. The FDA Data Dashboard API is a U.S. federal government
+  public-data service: FDA issues Authorization-User / Authorization-Key credentials free of
+  charge to anyone who submits a request with an email address, first name, last name and
+  organization ("Self" or "Consumer" is acceptable where no organization applies). No tiers, no
+  metering, no quota purchase, no commercial terms of any kind are published. Recorded as an
+  explicit zero with the reason, rather than omitted.
+pricing_model: free-credentialed
+currency: null
+plans: []
+access:
+  cost: none
+  credential_required: true
+  credential_request:
+    route: OII Unified Logon application (link on the docs page is broken as of 2026-09-12)
+    fallback: FDADataDashboard@fda.hhs.gov
+    required_fields: [email, first name, last name, organization]
+  approval: manual — FDA approves the request and emails the generated key

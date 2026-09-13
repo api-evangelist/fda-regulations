@@ -1,0 +1,33 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org/pypi/<pkg>/json, api.github.com/orgs/FDA/repos,
+  and https://datadashboard.fda.gov/oii/api/index.htm
+note: >-
+  No first-party client library exists for the FDA Data Dashboard API. The API documentation
+  ships no SDK section — it tells integrators to construct raw HTTPS POSTs and offers the
+  OpenAPI 3.0 document (ddapi.json) for import into a REST client instead. npm returns no
+  FDA-published package; the only PyPI package named `ddapi` (version 0.14.3) is an unrelated
+  third-party client for the DDNet game, not FDA. The FDA GitHub organization (57 public repos,
+  github.com/FDA) publishes `openfda` and `open.fda.gov` for the separate openFDA API and
+  nothing for the Data Dashboard. Recorded as a genuine zero, not an unchecked field.
+package_count: 0
+packages: []
+registries_checked:
+  - registry: npm
+    query: https://registry.npmjs.org/-/v1/search?text=fda+data+dashboard
+    result: no first-party package
+  - registry: pypi
+    query: https://pypi.org/pypi/ddapi/json
+    version: 0.14.3
+    published: null
+    result: name collision — unrelated third-party DDNet client, not FDA
+  - registry: pypi
+    query: https://pypi.org/pypi/fda-data-dashboard/json
+    result: 404 — absent
+  - registry: pypi
+    query: https://pypi.org/pypi/fda-datadashboard/json
+    result: 404 — absent
+  - registry: github
+    query: https://api.github.com/orgs/FDA/repos
+    result: 57 repos, none for the Data Dashboard API

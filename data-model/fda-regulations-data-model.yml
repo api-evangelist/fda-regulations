@@ -1,0 +1,122 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  openapi/_original/fda-data-dashboard-openapi.json plus the four published field-definition
+  tables at https://datadashboard.fda.gov/oii/api/api-definitions-{inspections,citations,
+  compliance-actions,refusals}.htm
+note: >-
+  The OpenAPI contract declares every `result` array as untyped, so the row shapes below could
+  not be derived from the spec — they are transcribed from FDA's own field-definition pages,
+  which are the only place the per-dataset columns are published. Fieldnames are case-sensitive.
+  Fields ending From/To are filter-only date-range forms of the base date field, not columns.
+entities:
+  - name: Firm
+    description: >-
+      The regulated establishment. Not an endpoint of its own — it is the shared subject every
+      dataset is keyed to, and the reason the four datasets join at all.
+    primary_key: FEINumber
+    id_scheme: FDA Establishment Identifier (numeric)
+    appears_in: [InspectionClassification, InspectionCitation, ComplianceAction, ImportRefusal]
+    name_field_variance: >-
+      Called LegalName on inspections, citations and compliance actions; called FirmName on
+      import refusals. Same concept, two spellings — a real join hazard.
+  - name: InspectionClassification
+    endpoint: /inspections_classifications
+    operation_id: inspectionsClassifications
+    description: The outcome classification FDA assigned to a completed inspection.
+    primary_key: InspectionID
+    foreign_keys:
+      - field: FEINumber
+        references: Firm
+    fields:
+      [FEINumber, LegalName, AddressLine1, AddressLine2, City, StateCode, State, ZipCode,
+       CountryCode, CountryName, InspectionID, InspectionEndDate, FiscalYear, PostedCitations,
+       Classification, ClassificationCode, ProjectArea, ProductType, AdditionalDetails,
+       FMD145Date, FirmProfile]
+    date_range_filters: [InspectionEndDateFrom, InspectionEndDateTo]
+  - name: InspectionCitation
+    endpoint: /inspections_citations
+    operation_id: inspectionsCitations
+    description: >-
+      A single regulatory citation recorded during an inspection — the Act or CFR reference the
+      investigator cited, with its short and long description.
+    primary_key: CitationID
+    foreign_keys:
+      - field: InspectionID
+        references: InspectionClassification
+      - field: FEINumber
+        references: Firm
+    fields:
+      [InspectionID, FEINumber, LegalName, AddressLine1, AddressLine2, City, StateCode, State,
+       ZipCode, CountryCode, CountryName, InspectionEndDate, FiscalYear, ProgramArea, CitationID,
+       ActCFRNumber, ShortDescription, LongDescription, FirmProfile]
+    date_range_filters: [InspectionEndDateFrom, InspectionEndDateTo]
+    domain_identifier: ActCFRNumber — the FD&C Act section or Title 21 CFR reference cited
+  - name: ComplianceAction
+    endpoint: /compliance_actions
+    operation_id: complianceActions
+    description: A warning letter, injunction, seizure or other compliance action FDA took against a firm.
+    primary_key: CaseInjunctionID
+    foreign_keys:
+      - field: FEINumber
+        references: Firm
+    fields:
+      [FEINumber, LegalName, AddressLine1, AddressLine2, City, StateCode, State, ZipCode,
+       CountryCode, CountryName, Region, ProductType, Center, ActionType, ActionTakenDate,
+       FiscalYear, CaseInjunctionID, FirmProfile]
+    date_range_filters: [ActionTakenDateFrom, ActionTakenDateTo]
+  - name: ImportRefusal
+    endpoint: /import_refusals
+    operation_id: importRefusals
+    description: A shipment FDA refused entry at the border, with the charges cited against it.
+    primary_key: ShipmentID
+    foreign_keys:
+      - field: FEINumber
+        references: Firm
+    fields:
+      [FEINumber, FirmName, AddressLine1, AddressLine2, City, State, ZipCode, CountryCode,
+       CountryName, DistrictCode, DistrictDescription, IndustryCode, IndustryCodeDescription,
+       ProductCategory, ProductCode, ProductCodeDescription, RefusalDate, ShipmentID,
+       FDASampleAnalysis, PrivateLabAnalysis, RefusalCharges, FirmProfile]
+    date_range_filters: [RefusalDateFrom, RefusalDateTo]
+relationships:
+  - from: Firm
+    to: InspectionClassification
+    kind: has_many
+    via: FEINumber
+  - from: Firm
+    to: InspectionCitation
+    kind: has_many
+    via: FEINumber
+  - from: Firm
+    to: ComplianceAction
+    kind: has_many
+    via: FEINumber
+  - from: Firm
+    to: ImportRefusal
+    kind: has_many
+    via: FEINumber
+  - from: InspectionClassification
+    to: InspectionCitation
+    kind: has_many
+    via: InspectionID
+  - from: InspectionCitation
+    to: InspectionClassification
+    kind: belongs_to
+    via: InspectionID
+envelope:
+  schema: '#/components/schemas/RequestBody'
+  responses:
+    - ImportRefusalsResponse
+    - InspectionsCitationsResponse
+    - InspectionsClassificationsResponse
+    - ComplianceActionsResponse
+  note: >-
+    All four response schemas share {statuscode, message, resultcount, result[]}; the
+    classifications and compliance-actions envelopes additionally declare totalrecordcount,
+    though the docs describe returntotalcount as available on every endpoint — a spec/docs
+    divergence, recorded not corrected.
+numeric_fields: [FEINumber, InspectionID, CitationID]
+gaps:
+  - The `result` array item shape is undeclared in the OpenAPI for all four datasets.
+  - Field-level match types (Exact / Partial / Range) and filter/column/sort eligibility are published only as HTML tables.

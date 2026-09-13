@@ -1,0 +1,23 @@
+generated: '2026-09-12'
+method: generated
+source: >-
+  openapi/fda-regulations-data-dashboard-openapi.yml plus
+  conventions/fda-regulations-conventions.yml, errors/fda-regulations-error-codes.yml,
+  data-model/fda-regulations-data-model.yml and examples/fda-regulations-examples.yml
+note: >-
+  Every operationId, fieldname, statuscode and filter rule in these skills was verified against
+  the harvested OpenAPI or FDA's own field-definition tables. The sample FEI numbers are FDA's
+  own published example values, carried through from the documentation.
+skills:
+  - file: fda-regulations-firm-compliance-history.md
+    name: Build a firm's FDA compliance history
+    api: openapi/fda-regulations-data-dashboard-openapi.yml
+    operations: [inspectionsClassifications, inspectionsCitations, complianceActions, importRefusals]
+  - file: fda-regulations-import-refusal-screening.md
+    name: Screen imports for FDA refusal risk
+    api: openapi/fda-regulations-data-dashboard-openapi.yml
+    operations: [importRefusals]
+  - file: fda-regulations-cfr-citation-lookup.md
+    name: Find who FDA cited under a regulation
+    api: openapi/fda-regulations-data-dashboard-openapi.yml
+    operations: [inspectionsCitations, inspectionsClassifications]

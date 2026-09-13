@@ -1,0 +1,195 @@
+generated: '2026-09-12'
+method: searched
+source: https://datadashboard.fda.gov/oii/api/index.htm
+note: >-
+  Request and response examples published by FDA on the Data Dashboard API usage documentation
+  page, transcribed verbatim. The OpenAPI contract itself carries no `example` or `examples`
+  anywhere, so these exist only as HTML on the docs page — this artifact is what makes them
+  machine-readable. All values are FDA's own published sample values.
+examples:
+  - name: minimal-request
+    applies_to: [importRefusals, inspectionsCitations, inspectionsClassifications, complianceActions]
+    description: Every default — all columns, maximum rows, primary-key sort order.
+    request: |
+      {
+          "sort" : "",
+          "sortorder" : "",
+          "filters" : {},
+          "columns" : []
+      }
+  - name: import-refusals-by-firm-and-date-range
+    applies_to: [importRefusals]
+    description: Three FEI numbers, refusal date range, newest first, five projected columns.
+    request: |
+      {
+          "start" : 1,
+          "rows" : 10,
+          "returntotalcount" : true,
+          "sort" : "RefusalDate",
+          "sortorder" : "DESC",
+          "filters" : {
+              "FEINumber":[3003378587,1000117386,3008091479],
+              "RefusalDateFrom":["2001-11-27"],
+              "RefusalDateTo":["2020-11-27"]
+          },
+          "columns" : [
+              "FEINumber",
+              "FirmName",
+              "CountryCode",
+              "ProductCode",
+              "RefusalDate"
+          ]
+      }
+    response: |
+      {
+          "statuscode": 400,
+          "message": "Success.",
+          "resultcount": 3,
+          "result": [
+          {
+              "FEINumber": "3003378587",
+              "FirmName": "Company 1",
+              "CountryCode": "VN",
+              "ProductCode": "16AGT64",
+              "RefusalDate": "2010-09-05"
+          },
+          {
+              "FEINumber": "1000117386",
+              "FirmName": " Company 2, Inc",
+              "CountryCode": "US",
+              "ProductCode": "77EWO",
+              "RefusalDate": "2015-10-01"
+          },
+          {
+              "FEINumber": "3008091479",
+              "FirmName": " Company 3",
+              "CountryCode": "MX",
+              "ProductCode": "94V07",
+              "RefusalDate": "2018-10-04"
+          }
+          ]
+      }
+  - name: import-refusals-by-country-and-product
+    applies_to: [importRefusals]
+    description: Two-country filter combined with a partial product-description match.
+    request: |
+      {
+          "start" : 1,
+          "rows" : 3,
+          "sort" : "ProductCode",
+          "sortorder" : "ASC",
+          "returntotalcount" : true,
+          "filters" : {
+              "CountryCode" : ["JP","MX"],
+              "ProductCodeDescription":["RECEIVER"]
+          },
+          "columns" : [
+              "FEINumber",
+              "FirmName",
+              "CountryCode",
+              "ProductCode",
+              "RefusalDate"
+          ]
+      }
+  - name: inspections-classifications-voluntary-action-since
+    applies_to: [inspectionsClassifications]
+    description: Classification containing "Voluntary Action", inspections ending on or after a date.
+    request: |
+      {
+          "start" : 1,
+          "rows":100,
+          "returntotalcount" : true,
+          "sort" : "InspectionEndDate",
+          "sortorder" : "ASC",
+          "filters" : {
+                  "Classification":["Voluntary Action"],
+                  "InspectionEndDateFrom":["2018-11-27"]
+          },
+          "columns" : [
+              "FEINumber",
+              "LegalName",
+              "InspectionID",
+              "Classification",
+              "InspectionEndDate"
+          ]
+      }
+  - name: inspections-citations-by-firm
+    applies_to: [inspectionsCitations]
+    description: Five FEI numbers, sorted by legal name, one thousand rows.
+    request: |
+      {
+          "start" : 1,
+          "rows" : 1000,
+          "sort" : "LegalName",
+          "sortorder" : "ASC",
+          "returntotalcount" : true,
+          "filters" : {
+              "FEINumber":[3003570895,3007755021,3006647331,3001452914,1121950]
+          },
+          "columns" : [
+              "FEINumber",
+              "LegalName",
+              "CitationID",
+              "InspectionID"
+          ]
+      }
+  - name: compliance-actions-injunctions-biologics-drugs
+    applies_to: [complianceActions]
+    description: Injunctions against biologics and drug firms taken since 2022-01-01, newest first.
+    request: |
+      {
+          "start" : 1,
+          "rows": 50,
+          "returntotalcount" : true,
+          "sort" : "ActionTakenDate",
+          "sortorder" : "DESC",
+          "filters" : {
+                  "ProductType":["Biologics", "Drugs"],
+                  "ActionType" :["Injunction"],
+                  "ActionTakenDateFrom":["2022-01-01"]
+          },
+          "columns" : [
+              "FEINumber",
+              "LegalName",
+              "CaseInjunctionID",
+              "ActionType",
+              "ActionTakenDate"
+          ]
+      }
+  - name: null-and-empty-string-response
+    applies_to: [importRefusals]
+    description: >-
+      FDA's published illustration of the difference between a JSON null (no data for that
+      column) and an empty string (a string column with no text).
+    response: |
+      {
+          "statuscode": 400,
+          "message": "Success",
+          "resultcount": 1,
+          "result": [
+              {
+              "FEINumber": "9999999999",
+              "FirmName": "Company Name, Inc.",
+              "AddressLine1": "1120 Somewhere Road",
+              "AddressLine2": "",
+              "City": "Locationville",
+              "State": "ON",
+              "ZipCode": "",
+              "CountryCode": "CA",
+              "CountryName": "",
+              "DistrictCode": "NYK-DO",
+              "DistrictDescription": null,
+              "IndustryCode": null,
+              "IndustryCodeDescription": null,
+              "ProductCategory": "Devices",
+              "ProductCode": "88LDT",
+              "ProductCodeDescription": "REAGENT, GENERAL PURPOSE",
+              "RefusalDate": "2021-01-01",
+              "ShipmentID": 1,
+              "FDASampleAnalysis": "No ",
+              "PrivateLabAnalysis": "No ",
+              "RefusalCharges": "118,508",
+              "FirmProfile": null
+              }
+          ]
+      }

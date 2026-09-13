@@ -1,0 +1,19 @@
+generated: '2026-09-12'
+method: searched
+source: https://datadashboard.fda.gov/oii/api/index.htm
+limit_count: 0
+note: >-
+  FDA publishes no rate limit, quota, burst allowance or throttling policy for the Data Dashboard
+  API, and no rate-limit response headers. Read the whole usage documentation page and the
+  OpenAPI: the only ceiling of any kind is a response page cap of 5000 rows, enforced in-body
+  with statuscode 415 ("Request body rows parameter must be <= 5000"), which is a pagination
+  limit and not a rate limit. An honest zero — the field was checked, not skipped. (Contrast the
+  sibling openFDA API on the parent record, which does publish per-key and per-IP daily limits.)
+limits: []
+response_headers: []
+exhaustion_status: null
+page_cap:
+  max_rows_per_response: 5000
+  default_rows: 5000
+  enforced_by: in-body statuscode 415
+  note: Response shaping ceiling, recorded here for completeness; not a rate limit.

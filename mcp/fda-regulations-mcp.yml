@@ -1,0 +1,40 @@
+generated: '2026-09-12'
+method: derived
+status: candidate
+source: openapi/fda-regulations-data-dashboard-openapi.yml
+note: >-
+  FDA publishes no MCP server for the Data Dashboard API. Searched the API documentation, the
+  FDA GitHub organization (57 public repos) and the npm registry; nothing hosted and nothing
+  installable. The tools below are a CANDIDATE surface derived one-for-one from the four real
+  OpenAPI operations — a design sketch, not something an agent can call today. Each tool's real
+  input contract is the operation's requestBody (components.schemas.RequestBody: start, rows,
+  sort, sortorder, returntotalcount, filters, columns) plus the two required credential headers.
+deployment:
+  mode: none
+  auth: api-key
+  verified: searched
+server:
+  name: fda-data-dashboard
+  transport: null
+  url: null
+tools:
+  - name: search_inspections_classifications
+    description: >-
+      Search FDA inspection classifications (NAI / VAI / OAI) by firm, FEI number, product type,
+      project area and inspection end-date range.
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#inspectionsClassifications
+  - name: search_inspections_citations
+    description: >-
+      Search the specific Act/CFR citations FDA investigators recorded during an inspection,
+      including ActCFRNumber and the short and long description of each citation.
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#inspectionsCitations
+  - name: search_compliance_actions
+    description: >-
+      Search FDA compliance actions — warning letters, injunctions, seizures and other actions —
+      by firm, product type, FDA center, action type and date taken.
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#complianceActions
+  - name: search_import_refusals
+    description: >-
+      Search FDA import refusals by firm, country, industry and product code, district and
+      refusal date, including the refusal charges cited.
+    source_operation: openapi/fda-regulations-data-dashboard-openapi.yml#importRefusals

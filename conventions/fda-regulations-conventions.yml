@@ -1,0 +1,134 @@
+generated: '2026-09-12'
+method: searched
+source: https://datadashboard.fda.gov/oii/api/index.htm
+note: >-
+  Cross-cutting request/response semantics for the FDA Data Dashboard API, captured from the
+  provider's own usage documentation and cross-checked against the published OpenAPI.
+authentication:
+  style: two api-key headers
+  headers:
+    - name: Authorization-User
+      value: the approved email address
+    - name: Authorization-Key
+      value: the FDA-generated key
+  onboarding: >-
+    Credentials are requested through the OII Unified Logon application and returned by email.
+    The request must supply email, first name, last name and organization.
+  transport: TLS 1.2 required for all requests
+  unauthenticated_response: statuscode 401, message "Not Authorized."
+  docs: https://datadashboard.fda.gov/oii/api/index.htm#section-authentication
+request:
+  method: POST
+  note: >-
+    Every endpoint is POST, but every endpoint is a read. The body carries the query; no
+    endpoint creates, updates or deletes anything.
+  content_type: application/json
+  required_body_keys: [sort, sortorder, filters, columns]
+  optional_body_keys: [start, rows, returntotalcount]
+  empty_value_rule: >-
+    Required keys may carry empty values and fall back to defaults. Optional keys may NOT carry
+    empty values — omit them instead. Any key not on the list causes an error response.
+pagination:
+  style: offset
+  request_params:
+    start: first row of the matching result set to return (1-based, default 1)
+    rows: maximum rows to return (default and hard maximum 5000)
+    returntotalcount: boolean; when true the response carries totalrecordcount
+  response_fields: [resultcount, totalrecordcount]
+  max_page_size: 5000
+  guidance: >-
+    Request returntotalcount only on the first page; it is recomputed on every request and the
+    value does not change. Page by summing resultcount into start until resultcount drops below
+    the page size.
+  docs: https://datadashboard.fda.gov/oii/api/index.htm#section-pagingresults
+sorting:
+  request_params: [sort, sortorder]
+  sortorder_values: [asc, desc]
+  case_sensitivity: sortorder is case-insensitive; fieldnames are case-sensitive
+  default: the dataset's unique primary key
+filtering:
+  param: filters
+  shape: >-
+    A JSON object whose keys are dataset fieldnames and whose values are arrays of search terms.
+    Multiple terms on one field are OR'd; multiple fields are AND'd.
+  match_types: [Exact, Partial, Range]
+  partial_semantics: SQL LIKE %term%
+  date_fields: >-
+    Date fields are filtered with a From and/or To suffix on the fieldname (InspectionEndDateFrom,
+    RefusalDateTo). Only the first value in a date array is honoured. Accepted input formats are
+    MM-DD-YYYY, MM/DD/YYYY and YYYY-MM-DD; responses always return ISO YYYY-MM-DD with no time part.
+  null_semantics: >-
+    JSON null and the empty string "" are distinct and both are valid search terms for string
+    fields; numeric and date fields accept null only.
+  typing: >-
+    FEINumber, InspectionID and CitationID are numeric and must be unquoted. Date fields and all
+    other fields are strings and must be quoted.
+field_projection:
+  param: columns
+  shape: array of fieldname strings; omit or send an empty array to return every column
+  note: >-
+    Some fieldnames can be returned in results but cannot be used to filter. The per-dataset
+    field definition tables mark which of filters, columns and sort each fieldname supports.
+  docs: https://datadashboard.fda.gov/oii/api/index.htm#section-fieldnames
+error_envelope:
+  shape: the same envelope as a success response
+  fields: [statuscode, message, resultcount, result]
+  note: >-
+    The API carries its own numeric statuscode inside a 200-shaped JSON body rather than using
+    HTTP status codes — 400 means Success, 401 means Not Authorized. See
+    errors/fda-regulations-error-codes.yml for the full registry.
+  diagnostic_fields:
+    - invalid_columns
+    - invalid_filters
+    - invalid_filters_type
+    - invalid_parameters
+    - fieldnames_with_invalid_values
+    - missing_parameters
+    - duplicate_parameters
+    - duplicate_filters
+    - duplicate_columns
+  format: proprietary
+  rfc9457: false
+  cross_reference: errors/fda-regulations-error-codes.yml
+versioning:
+  style: uri-path
+  current: v1
+  base: https://api-datadashboard.fda.gov/v1
+  spec_version: 1.0.0 (info.version in ddapi.json)
+  cross_reference: lifecycle/fda-regulations-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  note: No correlation or request-id header is documented.
+rate_limit_signaling:
+  headers: []
+  note: >-
+    No rate limit, quota or Retry-After header is documented. The only documented ceiling is the
+    5000-row response page cap. See rate-limits/fda-regulations-rate-limits.yml.
+metadata:
+  supported: false
+field_expansion:
+  supported: false
+  note: >-
+    Column projection via the columns parameter is the only shaping mechanism; there is no
+    expand/include facility and no nested resources to expand.
+idempotency:
+  coverage: na
+  mechanism: null
+  header: null
+  note: >-
+    The API has no mutating surface. All four operations are dataset searches issued over POST,
+    so there is nothing to replay-protect. Recorded as `na` rather than `none` so the record is
+    not scored against a mechanism it has no use for.
+dry_run_mode:
+  supported: na
+  note: >-
+    No write surface, therefore no rehearsal mode to document. The interactive "Try It Out"
+    console on the documentation page is a live call against production data, not a dry run.
+reversibility:
+  grade: na
+  write_surfaces: []
+  note: >-
+    Read-only API. There is no create, update or delete operation, so there is no action an
+    agent could take that would need to be taken back, and no reversal window to state. Verified
+    against all four operations in ddapi.json (importRefusals, inspectionsCitations,
+    inspectionsClassifications, complianceActions), each documented as "Search and retrieve".

@@ -1,0 +1,55 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://datadashboard.fda.gov/oii/api/index.htm, https://datadashboard.fda.gov/oii/index.htm,
+  https://datadashboard.fda.gov/oii/notifications.htm, openapi/_original/fda-data-dashboard-openapi.json
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://api-datadashboard.fda.gov/v1
+  spec_version: 1.0.0
+  docs: https://datadashboard.fda.gov/oii/api/index.htm#section-endpoints
+  note: >-
+    The only version FDA has ever published for this API is v1, carried in the path. info.version
+    in ddapi.json is 1.0.0. No version-negotiation header, no date-based version train.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No deprecation policy, no sunset or deprecation header, and no stated notice period are
+    published anywhere on the Data Dashboard API documentation. The API was, however, migrated
+    from the /ora/ path to the /oii/ path when the Office of Regulatory Affairs was renamed the
+    Office of Inspections and Investigations; the old /ora/api/ documentation and ddapi.json are
+    still served and byte-identical to the new ones (md5 f5ad83229a11706785a46c0c68499770 on both
+    2026-09-12), so the rename was handled by dual-serving rather than by a redirect or a notice.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_channel:
+  kind: email-subscription
+  url: https://datadashboard.fda.gov/oii/notifications.htm
+  covers: new features, major site updates, scheduled maintenance
+  note: >-
+    This is an opt-in email list, not a status page: there is no public incident history, no
+    current-state indicator and no machine-readable feed. No StatusPage pointer is emitted,
+    because the provider does not publish one.
+changelog:
+  url: null
+  note: >-
+    No dated changelog. The Data Dashboard home page carries a short untimestamped "NEW!" block
+    (OII Unified Logon integration; Import Alerts and Warning Letters accuracy on Firm Profile
+    pages) which is the nearest published release note and carries no dates or versions.
+support:
+  email: FDADataDashboard@fda.hhs.gov
+  note: Single email channel for both API assistance and data-quality issues.
+deprecated_operations: []
+known_defects:
+  - kind: dead-link
+    where: https://datadashboard.fda.gov/oii/api/index.htm#section-authentication
+    detail: >-
+      The "OII Unified Logon" anchor that the documentation names as the way to request API
+      credentials is served with href="#" and no client-side handler we could resolve, so the
+      documented self-serve credential path is not reachable from the docs page. Probed
+      2026-09-12; oiiunifiedlogon.fda.gov and unifiedlogon.fda.gov do not resolve. The
+      FDADataDashboard@fda.hhs.gov address is the only working onboarding route we could verify.
