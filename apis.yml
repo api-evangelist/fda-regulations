@@ -1,5 +1,11 @@
 aid: fda-regulations
 name: FDA Regulations
+# x-type: concept -- this record is a LAW, not a company (roadmap#362). score.rb's
+# NON_PROVIDER_X_TYPES excludes concept from scoring: a statute cannot publish an API and
+# must not be ranked as though it did. CCPA scored 59.1 `strong`, #23 of 746 in compliance,
+# above OneTrust and Didomi. These entities are modelled properly at
+# regulations.apievangelist.com; this record keeps the slug resolving.
+x-type: concept
 description: 'FDA Regulations is the body of federal rules the U.S. Food and Drug Administration enforces
   over the safety, efficacy and security of food, human and animal drugs, biologics, medical devices,
   cosmetics and tobacco products — codified at 21 CFR and administered through the agency''s inspection,
