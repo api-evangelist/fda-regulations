@@ -1,10 +1,5 @@
 aid: fda-regulations
 name: FDA Regulations
-# x-type: concept -- this record is a LAW, not a company (roadmap#362). score.rb's
-# NON_PROVIDER_X_TYPES excludes concept from scoring: a statute cannot publish an API and
-# must not be ranked as though it did. CCPA scored 59.1 `strong`, #23 of 746 in compliance,
-# above OneTrust and Didomi. These entities are modelled properly at
-# regulations.apievangelist.com; this record keeps the slug resolving.
 x-type: concept
 description: 'FDA Regulations is the body of federal rules the U.S. Food and Drug Administration enforces
   over the safety, efficacy and security of food, human and animal drugs, biologics, medical devices,
@@ -25,8 +20,8 @@ deliveryModel:
   label: Hosted service · you call their endpoint
   confidence: high
   source:
-    - openapi
-    - plans
+  - openapi
+  - plans
   generated: '2026-09-12'
   method: derived
   note: U.S. federal government public-data service. A callable host exists (https://api-datadashboard.fda.gov/v1,
@@ -41,9 +36,9 @@ accessModel:
   label: Free · Requires approval
   confidence: high
   source:
-    - plans
-    - authentication
-    - sandbox
+  - plans
+  - authentication
+  - sandbox
   generated: '2026-09-12'
   method: derived
   note: 'No charge and no tiers, but not open: FDA issues the Authorization-User / Authorization-Key header
@@ -51,124 +46,116 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fda-regulations.png
 url: https://raw.githubusercontent.com/api-evangelist/fda-regulations/refs/heads/main/apis.yml
 created: '2025-01-01'
-modified: '2026-09-12'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 tags:
-  - Regulatory Compliance
-  - Healthcare
-  - Medical Devices
-  - Pharmaceuticals
-  - Food Safety
-  - Inspections
-  - Enforcement
-  - Federal-Government
-  - Public Data
-  - Imports
+- Regulatory Compliance
+- Healthcare
+- Medical Devices
+- Pharmaceuticals
+- Food Safety
+- Inspections
+- Enforcement
+- Federal-Government
+- Public Data
+- Imports
 apis:
-  - aid: fda-regulations:fda-regulations-data-dashboard-api
-    name: FDA Data Dashboard API
-    description: 'RESTful access to the FDA Data Dashboard datasets that record how FDA regulations are
-      enforced: inspection classifications, inspection citations (the specific CFR references cited against
-      a firm), compliance actions (warning letters, injunctions, seizures) and import refusals. All four
-      endpoints are POST searches taking a JSON body of filters, columns, sort and paging parameters.
-      Credentials (Authorization-User + Authorization-Key headers) are issued by FDA on request.'
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fda-regulations.png
-    humanURL: https://datadashboard.fda.gov/oii/api/index.htm
-    baseURL: https://api-datadashboard.fda.gov/v1
-    tags:
-      - Regulatory Compliance
-      - Inspections
-      - Enforcement
-      - Imports
-      - Public Data
-    properties:
-      - type: OpenAPI
-        url: openapi/fda-regulations-data-dashboard-openapi.yml
-      - type: Documentation
-        url: https://datadashboard.fda.gov/oii/api/index.htm
-      - type: APIReference
-        url: https://datadashboard.fda.gov/oii/api/index.htm#section-endpoints
-      - type: GettingStarted
-        url: https://datadashboard.fda.gov/oii/api/index.htm#section-usage
-      - type: Authentication
-        url: https://datadashboard.fda.gov/oii/api/index.htm#section-authentication
-      - type: Support
-        url: mailto:FDADataDashboard@fda.hhs.gov
-common:
-  - type: AgenticAccess
-    url: agentic-access/fda-regulations-agentic-access.yml
-  - type: AgentSkill
-    url: skills/_index.yml
-  - type: APIReference
-    url: https://datadashboard.fda.gov/oii/api/index.htm#section-endpoints
-  - type: Authentication
-    url: authentication/fda-regulations-authentication.yml
-  - type: Conformance
-    url: conformance/fda-regulations-conformance.yml
-  - type: Conventions
-    url: conventions/fda-regulations-conventions.yml
-  - type: DataModel
-    url: data-model/fda-regulations-data-model.yml
-  - type: DeveloperPortal
-    url: https://datadashboard.fda.gov/oii/api/index.htm
+- aid: fda-regulations:fda-regulations-fda-data-dashboard-api-api
+  name: FDA Regulations FDA Data Dashboard API
+  description: The FDA Data Dashboard API API from FDA Regulations — 4 operation(s) for fda data dashboard
+    api.
+  humanURL: https://datadashboard.fda.gov/oii/api/index.htm
+  baseURL: https://api-datadashboard.fda.gov/v1
+  tags:
+  - FDA Data Dashboard API
+  properties:
+  - type: OpenAPI
+    url: openapi/fda-regulations-fda-data-dashboard-api-api-openapi.yml
   - type: Documentation
     url: https://datadashboard.fda.gov/oii/api/index.htm
-  - type: DomainSecurity
-    url: security/fda-regulations-domain-security.yml
-  - type: ErrorCatalog
-    url: errors/fda-regulations-error-codes.yml
-  - type: Examples
-    url: examples/fda-regulations-examples.yml
+  - type: APIReference
+    url: https://datadashboard.fda.gov/oii/api/index.htm#section-endpoints
   - type: GettingStarted
     url: https://datadashboard.fda.gov/oii/api/index.htm#section-usage
-  - type: GitHubOrganization
-    url: https://github.com/FDA
-  - type: Lifecycle
-    url: lifecycle/fda-regulations-lifecycle.yml
-  - type: LLMsTxt
-    url: llms/fda-regulations-llms.txt
-  - type: OpenAPI
-    url: openapi/fda-regulations-data-dashboard-openapi.yml
-  - type: Overlay
-    url: overlays/fda-regulations-data-dashboard-overlay.yaml
-  - type: Packages
-    url: packages/fda-regulations-packages.yml
-  - type: Plans
-    url: plans/fda-regulations-plans-pricing.yml
-  - type: PrivacyPolicy
-    url: https://www.fda.gov/about-fda/about-website/website-policies
-  - type: RateLimits
-    url: rate-limits/fda-regulations-rate-limits.yml
-  - type: Sandbox
-    url: https://datadashboard.fda.gov/oii/api/index.htm#section-try
+  - type: Authentication
+    url: https://datadashboard.fda.gov/oii/api/index.htm#section-authentication
   - type: Support
     url: mailto:FDADataDashboard@fda.hhs.gov
-  - type: TermsOfService
-    url: https://www.fda.gov/about-fda/about-website/website-policies
-  - type: Website
-    url: https://www.fda.gov/regulatory-information/laws-enforced-fda
-  - type: X-MCPServerCandidate
-    url: mcp/fda-regulations-mcp.yml
-  - type: X-WellKnownProbe
-    url: well-known/fda-regulations-well-known.yml
+common:
+- type: AgenticAccess
+  url: agentic-access/fda-regulations-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: APIReference
+  url: https://datadashboard.fda.gov/oii/api/index.htm#section-endpoints
+- type: Authentication
+  url: authentication/fda-regulations-authentication.yml
+- type: Conformance
+  url: conformance/fda-regulations-conformance.yml
+- type: Conventions
+  url: conventions/fda-regulations-conventions.yml
+- type: DataModel
+  url: data-model/fda-regulations-data-model.yml
+- type: DeveloperPortal
+  url: https://datadashboard.fda.gov/oii/api/index.htm
+- type: Documentation
+  url: https://datadashboard.fda.gov/oii/api/index.htm
+- type: DomainSecurity
+  url: security/fda-regulations-domain-security.yml
+- type: ErrorCatalog
+  url: errors/fda-regulations-error-codes.yml
+- type: Examples
+  url: examples/fda-regulations-examples.yml
+- type: GettingStarted
+  url: https://datadashboard.fda.gov/oii/api/index.htm#section-usage
+- type: GitHubOrganization
+  url: https://github.com/FDA
+- type: Lifecycle
+  url: lifecycle/fda-regulations-lifecycle.yml
+- type: LLMsTxt
+  url: llms/fda-regulations-llms.txt
+- type: OpenAPI
+  url: openapi/_original/fda-regulations-data-dashboard-openapi.yml
+- type: Overlay
+  url: overlays/fda-regulations-data-dashboard-overlay.yaml
+- type: Packages
+  url: packages/fda-regulations-packages.yml
+- type: Plans
+  url: plans/fda-regulations-plans-pricing.yml
+- type: PrivacyPolicy
+  url: https://www.fda.gov/about-fda/about-website/website-policies
+- type: RateLimits
+  url: rate-limits/fda-regulations-rate-limits.yml
+- type: Sandbox
+  url: https://datadashboard.fda.gov/oii/api/index.htm#section-try
+- type: Support
+  url: mailto:FDADataDashboard@fda.hhs.gov
+- type: TermsOfService
+  url: https://www.fda.gov/about-fda/about-website/website-policies
+- type: Website
+  url: https://www.fda.gov/regulatory-information/laws-enforced-fda
+- type: X-MCPServerCandidate
+  url: mcp/fda-regulations-mcp.yml
+- type: X-WellKnownProbe
+  url: well-known/fda-regulations-well-known.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
 x-parent: food-and-drug-administration
 x-relationship: product
 position: Producing
 access: 3rd-Party
 tags_raw:
-  - Regulatory Compliance
-  - Healthcare
-  - Medical Devices
-  - Pharmaceuticals
-  - Food Safety
-  - Inspections
-  - Enforcement
-  - Federal Government
-  - Public Data
-  - Imports
+- Regulatory Compliance
+- Healthcare
+- Medical Devices
+- Pharmaceuticals
+- Food Safety
+- Inspections
+- Enforcement
+- Federal Government
+- Public Data
+- Imports
 x-enrichment:
   date: '2026-09-12'
   status: enriched
