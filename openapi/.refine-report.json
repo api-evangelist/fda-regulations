@@ -1,0 +1,23 @@
+{
+  "provider": "fda-regulations",
+  "sources": [
+    "_original/fda-data-dashboard-openapi.json"
+  ],
+  "outputs": [
+    "fda-regulations-fda-data-dashboard-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "fda-data-dashboard-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "fda-data-dashboard-openapi.json: declared missing tag: FDA Data Dashboard API",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/fda-regulations-data-dashboard-openapi.yml: archived document superseded by a larger archived document",
+    "fda-regulations-fda-data-dashboard-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
