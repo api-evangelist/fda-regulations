@@ -1,5 +1,6 @@
 aid: fda-regulations
 name: FDA Regulations
+kind: topic
 x-type: concept
 description: 'FDA Regulations is the body of federal rules the U.S. Food and Drug Administration enforces
   over the safety, efficacy and security of food, human and animal drugs, biologics, medical devices,
@@ -56,7 +57,7 @@ tags:
 - Food Safety
 - Inspection
 - Enforcement
-- Federal-Government
+- Federal Government
 - Public Data
 - Import
 tags_raw:
