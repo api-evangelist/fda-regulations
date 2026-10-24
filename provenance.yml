@@ -228,8 +228,8 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/fda-regulations-data-dashboard-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   packages/fda-regulations-packages.yml:
     method: searched
     evidence: declared in the artifact
