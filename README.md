@@ -1,4 +1,4 @@
-# FDA Regulations (fda-regulations)
+# fda-regulations
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,87 +64,32 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Federal regulations governing the safety, efficacy and security of food, human and animal drugs,
-biologics, medical devices, cosmetics and tobacco products under FDA jurisdiction — codified at
-21 CFR and administered through the agency's inspection, citation, import and compliance-action
-programs. The machine-readable surface for that regulatory activity is the **FDA Data Dashboard
-API (DDAPI)**, published by the FDA Office of Inspections and Investigations (formerly the Office
-of Regulatory Affairs).
+## fda-regulations on APIs.io
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/fda-regulations/refs/heads/main/apis.yml)
+Everything profiled for fda-regulations is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fda-regulations/](https://apis.io/providers/fda-regulations/)** — or go straight to one of the APIs or properties below.
 
-## Scope
+### Published properties
 
-- **Type:** Index
-- **Position:** Producing
-- **Access:** 3rd-Party
-- **Parent:** [Food and Drug Administration](https://github.com/api-evangelist/food-and-drug-administration) (product)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### FDA Data Dashboard API
+Model Context Protocol servers that expose the API to agents.
 
-Four POST search endpoints over FDA's compliance and enforcement datasets. Base URL
-`https://api-datadashboard.fda.gov/v1`; credentials are the `Authorization-User` and
-`Authorization-Key` headers, issued free by FDA on request. TLS 1.2 required.
+- [fda-data-dashboard](https://apis.io/servers/fda-regulations/fda-data-dashboard/)
 
-| Operation | Endpoint | What it returns |
-|---|---|---|
-| `inspectionsClassifications` | `POST /inspections_classifications` | Inspection outcomes and classifications by firm |
-| `inspectionsCitations` | `POST /inspections_citations` | The FD&C Act / 21 CFR references cited against a firm (`ActCFRNumber`) |
-| `complianceActions` | `POST /compliance_actions` | Warning letters, injunctions and seizures |
-| `importRefusals` | `POST /import_refusals` | Shipments refused entry, with the charges cited |
+## API Evangelist rating
 
-- [Documentation](https://datadashboard.fda.gov/oii/api/index.htm)
-- [OpenAPI 3.0.0 (first-party)](https://datadashboard.fda.gov/oii/api/ddapi.json) — harvested verbatim to `openapi/_original/`
+Not yet rated. See [apis.io/providers/fda-regulations/](https://apis.io/providers/fda-regulations/).
 
-> Note: this API signals failure with a numeric `statuscode` **inside the JSON body**, not with
-> HTTP status. `statuscode` 400 means Success and 401 means Not Authorized. See
-> `errors/fda-regulations-error-codes.yml`.
+## How this profile is made
 
-## Artifacts
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-| Directory | File | What it holds |
-|---|---|---|
-| `openapi/` | `fda-regulations-data-dashboard-openapi.yml`, `_original/fda-data-dashboard-openapi.json` | FDA's own OpenAPI 3.0.0, harvested verbatim |
-| `overlays/` | `fda-regulations-data-dashboard-overlay.yaml` | Overlay 1.0.0 of our enhancements — never mutates the original |
-| `authentication/` | `fda-regulations-authentication.yml` | The two apiKey header schemes |
-| `conventions/` | `fda-regulations-conventions.yml` | Auth, paging, filtering, error envelope, idempotency (`na`), reversibility (`na`) |
-| `errors/` | `fda-regulations-error-codes.yml`, `fda-regulations-problem-types.yml` | The full 400–419 statuscode registry, and what the contract itself declares |
-| `data-model/` | `fda-regulations-data-model.yml` | Entity graph and the per-dataset field lists |
-| `examples/` | `fda-regulations-examples.yml` | FDA's published request/response examples, made machine-readable |
-| `skills/` | 3 Agent Skills + `_index.yml` | Grounded in real operationIds |
-| `conformance/` | `fda-regulations-conformance.yml` | Standards asserted, including the 21 CFR / FEI / product-code domain identifiers |
-| `lifecycle/` | `fda-regulations-lifecycle.yml` | Versioning, and the absence of a deprecation policy, SLA and status page |
-| `rate-limits/` | `fda-regulations-rate-limits.yml` | An honest zero — FDA publishes none |
-| `plans/` | `fda-regulations-plans-pricing.yml` | An honest zero — free, credentialed |
-| `packages/` | `fda-regulations-packages.yml` | An honest zero — no first-party SDK in any registry |
-| `sandbox/` | `fda-regulations-sandbox.yml` | The in-page try-it console; no test mode |
-| `well-known/` | `fda-regulations-well-known.yml` | Every named path probed on four hosts; nothing served |
-| `mcp/` | `fda-regulations-mcp.yml` | A **candidate** tool list derived from the spec — FDA ships no MCP server |
-| `agentic-access/` | `fda-regulations-agentic-access.yml` | Recommended execution contracts, curated to read-only |
-| `security/` | `fda-regulations-domain-security.yml` | Probed TLS / HSTS / DNSSEC / CAA / SPF / DMARC |
-| `llms/` | `fda-regulations-llms.txt` | Generated — FDA publishes none |
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for fda-regulations: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-## What FDA does not publish
+## Open an issue
 
-Probed 2026-09-12 and recorded as absent rather than omitted: no MCP server, no A2A agent card,
-no GraphQL, no AsyncAPI, no webhooks, no `/.well-known/` documents on any FDA host (including
-`security.txt`), no client SDKs in any registry, no status page, no dated changelog, no
-deprecation policy and no published rate limits.
-
-## Tags
-
-Regulatory Compliance, Healthcare, Medical Devices, Pharmaceuticals, Food Safety, Inspections,
-Enforcement, Federal Government, Public Data, Imports
-
-## Timestamps
-
-- **Created:** 2025-01-01
-- **Modified:** 2026-09-12
-
-## Maintainers
-
-**FN:** Kin Lane
-
-**Email:** kin@apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fda-regulations/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
