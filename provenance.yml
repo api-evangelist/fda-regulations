@@ -8,11 +8,20 @@ artifacts:
   authentication/fda-regulations-authentication.yml:
     method: derived
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   conformance/fda-regulations-conformance.yml:
     method: derived
     evidence: declared in the artifact
   conventions/fda-regulations-conventions.yml:
     method: searched
+    evidence: declared in the artifact
+  data-license/fda-regulations-data-license.yml:
+    method: harvested
     evidence: declared in the artifact
   data-model/fda-regulations-data-model.yml:
     method: searched
@@ -235,6 +244,9 @@ artifacts:
   plans/fda-regulations-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
+  privacy/fda-regulations-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/fda-regulations-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -256,6 +268,9 @@ artifacts:
   skills/fda-regulations-import-refusal-screening.md:
     method: unknown
     evidence: no authorship recorded
+  terms/fda-regulations-terms-of-service.yml:
+    method: harvested
+    evidence: declared in the artifact
   well-known/fda-regulations-well-known.yml:
     method: unknown
     evidence: no authorship recorded
